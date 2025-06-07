@@ -1,0 +1,68 @@
+﻿@model Movie
+
+
+@* @{ *@
+@*     ViewData["Title"] = "Home Page"; *@
+@* } *@
+
+
+
+
+<div class="card mb-3 col-12">
+    <div class="row g-0">
+        <div class="d-grid gap-2 d-md-block my-3">
+            @{
+                var status = Model.moveStatus;
+                string statusText = "";
+                string btnClass = "btn ";
+
+                switch (status)
+                {
+                    case MoveStatus.Upcoming:
+                        statusText = "Upcoming";
+                        btnClass += "btn-warning";
+                        break;
+
+                    case MoveStatus.Avilable:
+                        statusText = "Available";
+                        btnClass += "btn-primary";
+                        break;
+
+                    case MoveStatus.Expired:
+                        statusText = "Expired";
+                        btnClass += "btn-secondary";
+                        break;
+                }
+                <button class="@btnClass" type="button">@statusText</button>
+            }
+        </div>
+        <h4 class="Home-Index-H4">@Model.Name</h4>
+        <div class="col-md-4">
+            <img src="~/movies/@Model.Photo" class="img-fluid rounded-start  responsive-mobile-img" height="200px" alt="..." style="height: 300px;">
+        </div>
+        <div class="col-md-8">
+                <div class="card-body">
+                <p class="card-title">Name: @Model.Description</p>
+                    <h6 class="card-title">Price: @Model.Price</h6>
+                    <p class="card-title">Name: @Model.Cinema.Name</p>
+                    <p class="card-title">Start Date: @Model.StartDate</p>
+                    <p class="card-title">End Date: @Model.EndDate</p>
+                    <p class="card-title">Category: @Model.Category.Name</p>
+                @foreach (var actorMovie in Model.ActorMovie)
+                {
+                  <a href="/Actor/Index?Id=@actorMovie.Actor.Id">
+						<img src="~/cast/@actorMovie.Actor.ProfilePicture" class="img-fluid rounded-start" alt="..." style="height: 100px; border-radius:50%;">
+
+
+                 
+                  </a>  
+
+                }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+

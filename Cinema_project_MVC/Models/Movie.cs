@@ -15,7 +15,17 @@
         public double Price { get; set; }
         public string Photo { get; set; }
         public string TrailerUrl { get; set; }
-        public MoveStatus moveStatus { get; set; }
+        public MoveStatus moveStatus {
+            get
+            {
+                if (DateTime.Now < StartDate)
+                    return MoveStatus.Upcoming;
+                else if (DateTime.Now > EndDate)
+                    return MoveStatus.Expired;
+                else
+                    return MoveStatus.Avilable;
+            }
+        }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
@@ -24,6 +34,7 @@
         public Cinema Cinema { get; set; }
         public Category Category { get; set; }
         public List<ActorMovie> ActorMovie { get; set; }
+
 
 
 

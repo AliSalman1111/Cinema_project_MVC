@@ -1,0 +1,40 @@
+﻿@model List<Category>
+<div class="row mb-2">
+    <div class="col-9">
+        <h2> All Categories</h2>
+    </div>
+  
+
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+
+            <th scope="col">Movies</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr class="table-light">
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td><a href="/Category/Detailes/@item.Id">All Moveis</a></td>
+                
+            </tr>
+        }
+
+
+
+
+    </tbody>
+</table>
+
