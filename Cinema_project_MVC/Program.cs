@@ -1,3 +1,8 @@
+using Cinema_project_MVC.Data;
+using Cinema_project_MVC.Repository;
+using Cinema_project_MVC.Repository.IReprsitory;
+using Microsoft.EntityFrameworkCore;
+
 namespace Cinema_project_MVC
 {
     public class Program
@@ -8,6 +13,16 @@ namespace Cinema_project_MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(
+              option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+              );
+            builder.Services.AddScoped< ICatrgoryRepository, CategotyRepository>();
+
+            builder.Services.AddScoped<ICenimaRepository, CinemaRepository>();
+
+            builder.Services.AddScoped<IMovieRepository, MovieRpository>();
+
+            builder.Services.AddScoped<IActorRepository, ActorRepositury>();
 
             var app = builder.Build();
 
