@@ -4,8 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Cinema_project_MVC.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cinema_project_MVC.Models;
+using Cinema_project_MVC.StaticData;
+using Microsoft.AspNetCore.Authorization;
 namespace Cinema_project_MVC.Controllers
 {
+    [Authorize(Roles = $"{SD.AdminRole},{SD.CompanyRole}")]
     public class MovieController : Controller
     {
 

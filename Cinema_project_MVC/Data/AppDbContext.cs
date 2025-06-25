@@ -1,9 +1,11 @@
 ﻿using Cinema_project_MVC.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Cinema_project_MVC.modelView;
 
 namespace Cinema_project_MVC.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions)
@@ -28,5 +30,7 @@ namespace Cinema_project_MVC.Data
             modelBuilder.Entity<ActorMovie>()
        .HasKey(am => new { am.ActorId, am.MovieId });
         }
+        public DbSet<Cinema_project_MVC.modelView.ApplicationUserVM> ApplicationUserVM { get; set; } = default!;
+        public DbSet<Cinema_project_MVC.modelView.loginVm> loginVm { get; set; } = default!;
     }
 }

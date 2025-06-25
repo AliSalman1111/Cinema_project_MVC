@@ -16,7 +16,7 @@
 
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cinema_project_MVC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -30,25 +30,58 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cinema" asp-action="Index">Cinemas</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button"
-                               aria-haspopup="true" aria-expanded="false">MangmentSystem</a>
-                            <div class="dropdown-menu ">
-                                <a class="dropdown-item" href="/Category/Index2">Category</a>
-                                <a class="dropdown-item" href="/Actor/Index2">Actor</a>
-                                <a class="dropdown-item" href="/Cinema/Index2">Cinema</a>
-                                <a class="dropdown-item" href="/Movie/Index">Movies</a>
-                            </div>
-                        </li>
+
+                        @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.CompanyRole))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">MangmentSystem</a>
+                                <div class="dropdown-menu ">
+                                    <a class="dropdown-item" href="/Category/Index2">Category</a>
+                                    <a class="dropdown-item" href="/Actor/Index2">Actor</a>
+                                    <a class="dropdown-item" href="/Cinema/Index2">Cinema</a>
+                                    <a class="dropdown-item" href="/Movie/Index">Movies</a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
-            <form method="get" action="/Home/Index" class="mb-1 w-50 mx-auto mt-1">
+            <form method="get" action="/Home/Index" class="mb-1 w-25 mx-auto mt-1">
                 <div class="input-group">
                     <input type="text" name="searchTerm" class="form-control" placeholder="Search by movie name..." />
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
+
+            <ul class="navbar-nav   ">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Welcome @User.Identity.Name</a>
+                        </li>
+
+                    }
+
+                    else
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+
+                    }
+
+
+                </ul>
+              
+           
             
         </nav>
        

@@ -1,11 +1,14 @@
 ﻿using Cinema_project_MVC.Data;
 using Cinema_project_MVC.Models;
 using Cinema_project_MVC.Repository.IReprsitory;
+using Cinema_project_MVC.StaticData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema_project_MVC.Controllers
 {
+    [Authorize(Roles = $"{SD.AdminRole},{SD.CompanyRole}")]
     public class CategoryController : Controller
     {
 

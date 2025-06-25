@@ -1,6 +1,8 @@
 using Cinema_project_MVC.Data;
+using Cinema_project_MVC.Models;
 using Cinema_project_MVC.Repository;
 using Cinema_project_MVC.Repository.IReprsitory;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema_project_MVC
@@ -17,7 +19,12 @@ namespace Cinema_project_MVC
               option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
               );
             builder.Services.AddScoped< ICatrgoryRepository, CategotyRepository>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option => {
+                option.Password.RequiredLength = 3;
 
+
+
+            }).AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddScoped<ICenimaRepository, CinemaRepository>();
          // builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
 
