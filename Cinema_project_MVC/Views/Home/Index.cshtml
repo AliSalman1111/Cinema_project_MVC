@@ -55,7 +55,7 @@
                         <a href="/Home/MoreDetailes?Id=@item.Id" class="btn btn-light" style="border:1px solid black;">
                             More Detailse
                         </a>
-                        @if (status == MoveStatus.Avilable)
+                        @if (status == MoveStatus.Avilable || status == MoveStatus.Upcoming)
                         {
                             <button type="button" class="btn btn-success">Book Ticket</button>
                         }

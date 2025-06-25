@@ -19,9 +19,11 @@ namespace Cinema_project_MVC
             builder.Services.AddScoped< ICatrgoryRepository, CategotyRepository>();
 
             builder.Services.AddScoped<ICenimaRepository, CinemaRepository>();
+         // builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
+
 
             builder.Services.AddScoped<IMovieRepository, MovieRpository>();
-
+            builder.Services.AddScoped<IMovieActor, MonieActor>();
             builder.Services.AddScoped<IActorRepository, ActorRepositury>();
 
             var app = builder.Build();

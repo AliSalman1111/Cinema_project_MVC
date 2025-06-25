@@ -1,4 +1,6 @@
-﻿namespace Cinema_project_MVC.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Cinema_project_MVC.Models
 {
 
     public enum MoveStatus
@@ -15,7 +17,9 @@
         public double Price { get; set; }
         public string Photo { get; set; }
         public string TrailerUrl { get; set; }
-        public MoveStatus moveStatus {
+
+        
+        public MoveStatus? moveStatus {
             get
             {
                 if (DateTime.Now < StartDate)

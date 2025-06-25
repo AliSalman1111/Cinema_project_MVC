@@ -39,5 +39,74 @@ namespace Cinema_project_MVC.Controllers
             });
             return View(categorise);
         }
+        public IActionResult Index2()
+        {
+
+            var categorise = catrgoryRepository.GetAll(new Func<IQueryable<Category>, IQueryable<Category>>[]
+            {
+                
+            });
+            return View(categorise);
+        }
+        public IActionResult Add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Add(Category category)
+        {
+            catrgoryRepository.Add(category);
+            catrgoryRepository.Commit();
+
+            return RedirectToAction("Index2");
+        }
+
+        public IActionResult Update(int Id)
+        {
+            var Category = catrgoryRepository.Getone(new Func<IQueryable<Category>, IQueryable<Category>>[]
+           {
+             
+           },
+           filter: e => e.Id == Id
+
+
+               );
+            return View(Category);
+        }
+
+           
+        
+        [HttpPost]
+        public IActionResult Update(Category category)
+        {
+            catrgoryRepository.Edit(category);
+            catrgoryRepository.Commit();
+
+            return RedirectToAction("Index2");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int Id)
+        {
+            var category = catrgoryRepository.Getone(new Func<IQueryable<Category>, IQueryable<Category>>[]
+           {
+
+           },
+           filter: e => e.Id == Id
+
+
+               );
+
+            if (category != null)
+            {
+                catrgoryRepository.Delete(category);
+                catrgoryRepository.Commit();
+            }
+
+            return RedirectToAction("Index2");
+        }
+
+
+
     }
 }

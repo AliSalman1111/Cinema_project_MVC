@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Cinema_project_MVC.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row mb-2">
+    <div class="col-9">
+        <h2> All movies</h2>
+    </div>
+    <div class="col-3">
+        <button type="button" class="btn btn-success"><a href="/Movie/Add" style="text-decoration:none; color:white"> <i class="bi bi-plus-circle"></i> Add New Movie</a> </button>
+    </div>
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrailerUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cinema)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+                 @foreach (var item in Model) {
+             <tr>
+             <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Photo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrailerUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cinema.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Id)
+            </td>
+                <td><button type="button" class="btn btn-warning"> <a href="/Movie/Edit?Id=@item.Id" style="text-decoration:none;">Update</a> </button></td>
+                <td>
+                    <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            data-id="@item.Id" data-name="@item.Name">
+                        Delete
+                    </button>
+                </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-action="Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <strong id="itemNamePlaceholder">this item</strong>?
+                    <input type="hidden" name="Id" id="deleteItemId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const itemId = button.getAttribute('data-id');
+            const itemName = button.getAttribute('data-name');
+
+            const input = deleteModal.querySelector('#deleteItemId');
+            const namePlaceholder = deleteModal.querySelector('#itemNamePlaceholder');
+
+            input.value = itemId;
+            namePlaceholder.textContent = itemName;
+        });
+    </script>
+}

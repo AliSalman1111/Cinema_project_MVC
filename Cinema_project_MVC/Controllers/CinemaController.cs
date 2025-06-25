@@ -1,6 +1,7 @@
 ﻿using Cinema_project_MVC.Data;
 using Cinema_project_MVC.Models;
 using Cinema_project_MVC.Repository;
+using Cinema_project_MVC.Repository.IReprsitory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,8 @@ namespace Cinema_project_MVC.Controllers
     public class CinemaController : Controller
     {
 
-        CinemaRepository CinemaRepository;
-        public CinemaController(CinemaRepository cinemaRepository)
+        ICenimaRepository CinemaRepository;
+        public CinemaController(ICenimaRepository cinemaRepository)
         {
             CinemaRepository = cinemaRepository;
         }
@@ -37,5 +38,77 @@ namespace Cinema_project_MVC.Controllers
             );
             return View(moves);
         }
+        public IActionResult Index2()
+        {
+
+            var cinemas = CinemaRepository.GetAll(new Func<IQueryable<Cinema>, IQueryable<Cinema>>[]
+
+     {
+                    
+     });
+            return View(cinemas);
+        }
+        public IActionResult Add()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Add(Cinema cinema)
+        {
+            CinemaRepository.Add(cinema);
+            CinemaRepository.Commit();
+
+
+            return RedirectToAction("Index2");
+        }
+
+        public IActionResult Edit(int Id)
+        {
+            var cinema= CinemaRepository.Getone(new Func<IQueryable<Cinema>, IQueryable<Cinema>>[]
+            {
+
+            },
+            filter:e=>e.Id==Id
+            
+            
+            );
+
+            return View(cinema);
+        }
+        [HttpPost]
+        public IActionResult Edit(Cinema cinema)
+        {
+            CinemaRepository.Edit
+                (cinema);
+            CinemaRepository.Commit();
+            return RedirectToAction("Index2");
+
+        }
+
+     
+        [HttpPost]
+        public IActionResult Delete(int Id)
+        {
+            var category = CinemaRepository.Getone(new Func<IQueryable<Cinema>, IQueryable<Cinema>>[] { 
+            
+            }, 
+            
+            filter: e => e.Id == Id
+            
+            );
+
+            if (category != null)
+            {
+                CinemaRepository.Delete(category);
+                CinemaRepository.Commit();
+            }
+
+            return RedirectToAction("Index2");
+        }
+
+
+
     }
 }
+

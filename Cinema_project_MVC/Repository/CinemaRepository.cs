@@ -7,6 +7,8 @@ namespace Cinema_project_MVC.Repository
     {
         public CinemaRepository(AppDbContext db) : base(db)
         {
+
+
         }
     }
 }
