@@ -36,17 +36,33 @@ namespace Cinema_project_MVC.Controllers
             return View(actor);
         }
 
-        public IActionResult Index2()
+        public IActionResult Index2(int page, string? search)
         {
-         var actor = actorRepository.GetAll(new Func<IQueryable<Actor>, IQueryable<Actor>>[]
+
+         
+            var actor = actorRepository.GetAll(new Func<IQueryable<Actor>, IQueryable<Actor>>[]
 {
 
 
 
 });
+            if (page <= 0)
+            {
+                page = 1;
+            }
+            int pageSize = 5;
+            int totalProducts = actorRepository.GetAll().Count();
 
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
-            return View(actor);
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            if (search != null) {
+                actor= actor.Where(e => e.FirstName.Contains(search)|| e.LastName.Contains(search));
+            }
+
+            actor= actor.Skip((page-1)*5).Take(5);
+            return View(actor.ToList());
         }
 
 

@@ -22,12 +22,19 @@ public class HomeController : Controller
         this.movieRepository = movieRepository;
     }
 
-    public IActionResult Index(string searchTerm)
+    public IActionResult Index(string searchTerm,int page)
     {
-        //var movies = db.movies
-        //               .Include(m => m.Cinema)
-        //               .Include(m => m.Category)
-        //               .AsQueryable();
+        if (page <= 0) {
+        page= 1;
+        }
+
+        int pageSize = 5;
+        int totalProducts = movieRepository.GetAll().Count();
+
+        int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.CurrentPage = page;
         var movies = movieRepository.GetAll(new Func<IQueryable<Movie>, IQueryable<Movie>>[]
         {
             q=>q.Include(p=>p.Cinema)
@@ -45,8 +52,9 @@ public class HomeController : Controller
               
                 return RedirectToAction("NotFountPage");
             }
-        }
 
+        }
+        movies = movies.Skip((page-1)*5).Take(5);
         return View(movies.ToList());
     }
 

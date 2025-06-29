@@ -1,5 +1,6 @@
 ﻿using Cinema_project_MVC.Data;
 using Cinema_project_MVC.Models;
+using Cinema_project_MVC.Repository;
 using Cinema_project_MVC.Repository.IReprsitory;
 using Cinema_project_MVC.StaticData;
 using Microsoft.AspNetCore.Authorization;
@@ -40,16 +41,35 @@ namespace Cinema_project_MVC.Controllers
             {
                  q=>q.Include(p=>p.Movies).ThenInclude(p=>p.Cinema)
             });
-            return View(categorise);
+            return View(categorise.ToList());
         }
-        public IActionResult Index2()
+        public IActionResult Index2(int page, string? search)
         {
 
             var categorise = catrgoryRepository.GetAll(new Func<IQueryable<Category>, IQueryable<Category>>[]
             {
                 
             });
-            return View(categorise);
+
+
+            if(page <= 1)
+                page = 1;
+            int pageSize = 5;
+            int totalProducts = catrgoryRepository.GetAll().Count();
+
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            if (search != null)
+            {
+                search = search.TrimStart();
+                search = search.TrimEnd();
+                categorise = categorise.Where(e=>e.Name.Contains(search));
+            }
+
+            categorise= categorise.Skip((page-1)*5).Take(5);
+            return View(categorise.ToList());
         }
         public IActionResult Add()
         {

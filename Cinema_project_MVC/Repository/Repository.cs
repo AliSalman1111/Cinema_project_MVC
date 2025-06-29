@@ -15,7 +15,7 @@ namespace Cinema_project_MVC.Repository
             dbset = db.Set<T>();
         }
 
-        public IEnumerable<T> GetAll(
+        public IQueryable<T> GetAll(
 
     Func<IQueryable<T>, IQueryable<T>>[]? includes = null,
     Expression<Func<T, bool>>? filter = null, bool tracked = true)
@@ -40,7 +40,7 @@ namespace Cinema_project_MVC.Repository
                 query = query.AsNoTracking();
             }
 
-            return query.ToList();
+            return query;
         }
 
 

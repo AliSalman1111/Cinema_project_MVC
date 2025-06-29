@@ -21,12 +21,15 @@ namespace Cinema_project_MVC.Controllers
 
         public IActionResult Index()
         {
+            
             var cinemas = CinemaRepository.GetAll(new Func<IQueryable<Cinema>, IQueryable<Cinema>>[]
      {
                     q => q.Include(c => c.Movies)
                      .ThenInclude(p => p.Category)
      });
-            return View(cinemas);
+
+          
+            return View(cinemas.ToList());
         }
         public IActionResult Detailes(int Id)
         {
@@ -41,7 +44,7 @@ namespace Cinema_project_MVC.Controllers
             );
             return View(moves);
         }
-        public IActionResult Index2()
+        public IActionResult Index2(int page, string? search)
         {
 
             var cinemas = CinemaRepository.GetAll(new Func<IQueryable<Cinema>, IQueryable<Cinema>>[]
@@ -49,7 +52,26 @@ namespace Cinema_project_MVC.Controllers
      {
                     
      });
-            return View(cinemas);
+
+            if (page <= 1)
+            {
+                page = 1;
+            }
+            int pageSize = 5;
+            int totalProducts = CinemaRepository.GetAll().Count();
+
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+            if (search != null)
+            {
+                cinemas = cinemas.Where(e => e.Name.Contains(search));
+            }
+              cinemas = cinemas.Skip((page - 1) * 5).Take(5);
+
+            return View(cinemas.ToList());
         }
         public IActionResult Add()
         {
