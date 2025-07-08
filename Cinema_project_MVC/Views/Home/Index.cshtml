@@ -21,6 +21,7 @@
                         <p class="card-title">Name: @item.Cinema.Name</p>
                         <p class="card-title">Start Date: @item.StartDate</p>
                         <p class="card-title">End Date: @item.EndDate</p>
+                        <p class="card-title">Cinema: @item.Cinema.Name</p>
 						<p class="card-title">Category:<a href="/Category/Detailes/@item.Category.Id">@item.Category.Name</a> </p>
                         @* <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> *@
                         <div class="d-grid gap-2 d-md-block my-3">
@@ -52,12 +53,16 @@
 
                            
                         </div>
-                        <a href="/Home/MoreDetailes?Id=@item.Id" class="btn btn-light" style="border:1px solid black;">
+                        <a href="/Home/MoreDetailes?Id=@item.Id" class="btn btn-light  " style="border:1px solid black;">
                             More Detailse
                         </a>
                         @if (status == MoveStatus.Avilable || status == MoveStatus.Upcoming)
                         {
-                            <button type="button" class="btn btn-success">Book Ticket</button>
+                            <button type="button" class="btn btn-success">
+                                <a href="/Home/BookTicket?Id=@item.Id" class="ali">
+                                      Book Ticket
+                                </a>
+                            </button>
                         }
                         else
                         {

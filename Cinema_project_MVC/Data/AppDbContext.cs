@@ -23,14 +23,15 @@ namespace Cinema_project_MVC.Data
         public DbSet<ActorMovie> actorsMovie { get; set; }
         public DbSet<Category> categories { get; set; }
 
-       
+        public DbSet<cart> carts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ActorMovie>()
        .HasKey(am => new { am.ActorId, am.MovieId });
+            modelBuilder.Entity<cart>()
+                  .HasKey(c => new { c.movieId, c.ApplicationUserId });
         }
-        public DbSet<Cinema_project_MVC.modelView.ApplicationUserVM> ApplicationUserVM { get; set; } = default!;
-        public DbSet<Cinema_project_MVC.modelView.loginVm> loginVm { get; set; } = default!;
+        
     }
 }

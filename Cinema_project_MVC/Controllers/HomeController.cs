@@ -15,11 +15,12 @@ public class HomeController : Controller
    // AppDbContext db = new AppDbContext();
    IMovieRepository movieRepository;
 
- 
-    public HomeController(ILogger<HomeController> logger, IMovieRepository movieRepository)
+    ICartRepository cartRepository;
+    public HomeController(ILogger<HomeController> logger, IMovieRepository movieRepository, ICartRepository cartRepository)
     {
         _logger = logger;
         this.movieRepository = movieRepository;
+        this.cartRepository = cartRepository;
     }
 
     public IActionResult Index(string searchTerm,int page)
@@ -38,7 +39,7 @@ public class HomeController : Controller
         var movies = movieRepository.GetAll(new Func<IQueryable<Movie>, IQueryable<Movie>>[]
         {
             q=>q.Include(p=>p.Cinema)
-            .Include(p=>p.Category).AsQueryable()
+            .Include(p=>p.Cinema).Include(p=>p.Category).AsQueryable()
 
         });
 
@@ -78,6 +79,27 @@ public class HomeController : Controller
         {
           return  RedirectToAction("NotFountPage");
         }
+    }
+
+    public IActionResult BookTicket(int id)
+    {
+        var movies = movieRepository.Getone(new Func<IQueryable<Movie>, IQueryable<Movie>>[] {
+
+            
+
+        },
+
+        filter: e => e.Id == id
+        
+        );
+
+        var cart = new cart
+        {
+            movieId =id,
+           
+        };
+
+        return View(cart);
     }
     public IActionResult Privacy()
     {

@@ -29,13 +29,15 @@ namespace Cinema_project_MVC.Models
                 else
                     return MoveStatus.Avilable;
             }
+
         }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
         public int CinemaId { get; set; }
         public int CategoryId { get; set; }
-        public Cinema Cinema { get; set; }
+        public Cinema Cinema { get; set; } 
         public Category Category { get; set; }
         public List<ActorMovie> ActorMovie { get; set; }
 

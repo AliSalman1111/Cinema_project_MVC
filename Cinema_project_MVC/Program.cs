@@ -30,6 +30,7 @@ namespace Cinema_project_MVC
 
 
             builder.Services.AddScoped<IMovieRepository, MovieRpository>();
+            builder.Services.AddScoped<ICartRepository, CartRepositorty>();
             builder.Services.AddScoped<IMovieActor, MonieActor>();
             builder.Services.AddScoped<IActorRepository, ActorRepositury>();
 

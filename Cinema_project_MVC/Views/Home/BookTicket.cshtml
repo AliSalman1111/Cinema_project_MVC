@@ -1,0 +1,30 @@
+﻿@model cart
+
+@{
+    ViewBag.Title = "Book Ticket";
+}
+
+<h2>Book a Ticket</h2>
+
+@using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+
+ { 
+    @Html.LabelFor(m => m.count)
+    @Html.TextBoxFor(m => m.count, new { @class = "form-control" ,type = "number" })
+    @Html.ValidationMessageFor(m => m.count)
+
+    <br />
+
+    @Html.LabelFor(m => m.DateTime)
+    @Html.TextBoxFor(m => m.DateTime, new { @class = "form-control", type = "datetime-local" })
+    @Html.ValidationMessageFor(m => m.DateTime)
+
+    <br />
+    @Html.HiddenFor(m => m.movieId)
+    <input type="submit" value="Book Now" class="btn btn-primary" />
+}
+
+@* @section Scripts { *@
+
+@*     @Scripts.Render("~/bundles/jqueryval") *@
+@* } *@
