@@ -36,7 +36,7 @@ namespace Cinema_project_MVC.Controllers
 
             CartRepositorty.Add(cart);
             CartRepositorty.Commit();
-
+            int x;
 
             return RedirectToAction("Index", "Home");
         }
